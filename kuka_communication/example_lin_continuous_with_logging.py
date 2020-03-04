@@ -67,6 +67,9 @@ robot_name = robot.read('$ROBNAME[]', False)
 # Start logging thread
 t1 = threading.Thread(target=log_end_effector_cartessian, args=(83,))
 t1.start()
-t1.join()
+
 
 # Send trajectory here
+
+# Wait for logging thread to exit, but it never will.
+t1.join()
