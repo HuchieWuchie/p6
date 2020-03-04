@@ -10,6 +10,15 @@ class Kuka:
                 sys.exit(-1)
         self.name = self.robot.read('$ROBNAME[]', debug=False).decode()
 
+    def lin_continuous(self, arr, log=0):
+        self.send_Frame_array(arr)
+        self.robot.write("COM_LENGTH", str(arr.shape[0]-1))
+        if log == 1:
+            self.robot.write("COM_LOG", "1")
+            self.robot.write("COM_CASEVAR", "5")
+        else:
+            self.robot.write("COM_CASEVAR", "4")
+
     def read_advance(self):
         self.advance = self.robot.read("$ADVANCE", False).decode()
 
@@ -19,11 +28,6 @@ class Kuka:
     def ptp(self, arr):
         self.send_Frame(arr, "COM_FRAME")
         self.robot.write("COM_CASEVAR", "1")
-
-    def ptp_continuous(self, arr):
-        self.send_Frame_array(arr)
-        self.robot.write("COM_LENGTH", str(arr.shape[0]))
-        self.robot.write("COM_CASEVAR", "4")
 
     def read_base(self):
         string = self.robot.read("$BASE", False).decode()
@@ -59,10 +63,10 @@ class Kuka:
 
 
     def read_input(self, index):
-        self.index = self.robot.read(("$IN[" + index + "]")).decode()
+        return(self.robot.read(("$IN[" + index + "]")).decode())
 
     def read_out(self, index):
-        self.index = self.robot.read(("$OUT[" + index + "]")).decode()
+        return(self.robot.read(("$OUT[" + index + "]")).decode())
 
     def read_tcp_velocity(self):
         self.velocity_cartessian = self.robot.read("$VEL_C", False).decode()
