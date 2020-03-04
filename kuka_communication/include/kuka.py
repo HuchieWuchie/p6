@@ -12,12 +12,12 @@ class Kuka:
 
     def lin_continuous(self, arr, log=0):
         self.send_Frame_array(arr)
-        self.robot.write("COM_LENGTH", str(arr.shape[0]-1))
+        self.robot.write("COM_LENGTH", str(arr.shape[0]-1), False)
         if log == 1:
-            self.robot.write("COM_LOG", "1")
-            self.robot.write("COM_CASEVAR", "5")
+            self.robot.write("COM_LOG", "1", False)
+            self.robot.write("COM_CASEVAR", "5", False)
         else:
-            self.robot.write("COM_CASEVAR", "4")
+            self.robot.write("COM_CASEVAR", "4", False)
 
     def read_advance(self):
         self.advance = self.robot.read("$ADVANCE", False).decode()
@@ -27,7 +27,7 @@ class Kuka:
 
     def ptp(self, arr):
         self.send_Frame(arr, "COM_FRAME")
-        self.robot.write("COM_CASEVAR", "1")
+        self.robot.write("COM_CASEVAR", "1", False)
 
     def read_base(self):
         string = self.robot.read("$BASE", False).decode()
@@ -63,10 +63,10 @@ class Kuka:
 
 
     def read_input(self, index):
-        return(self.robot.read(("$IN[" + index + "]")).decode())
+        return(self.robot.read(("$IN[" + str(index) + "]"), False).decode())
 
     def read_out(self, index):
-        return(self.robot.read(("$OUT[" + index + "]")).decode())
+        return(self.robot.read(("$OUT[" + str(index) + "]"), False).decode())
 
     def read_tcp_velocity(self):
         self.velocity_cartessian = self.robot.read("$VEL_C", False).decode()
@@ -91,7 +91,7 @@ class Kuka:
             string_arr.append(str(arr[i]))
         string = ("{E6POS: X " + string_arr[0] + ", Y " + string_arr[1] + ", Z "+ string_arr[2] + ", A " + string_arr[3] + ", B " + string_arr[4] + ", C " + string_arr[5] + ", E1 " + str(self.E1_cartessian) + ", E2 " + str(self.E2_cartessian) + ", E3 " + str(self.E3_cartessian) + ", E4 " + str(self.E4_cartessian) + ", E5 " + str(self.E5_cartessian) + ", E6 " + str(self.E6_cartessian) + "}")
         print("string to be sent: ", string, " variable: ", system_variable)
-        self.robot.write(system_variable, string)
+        self.robot.write(system_variable, string, False)
 
     def send_Frame(self, arr, system_variable=""):
         string_arr = []
@@ -99,7 +99,7 @@ class Kuka:
             string_arr.append(str(arr[i]))
         cartessian_string = ("{FRAME: X " + string_arr[0] + ", Y " + string_arr[1] + ", Z "+ string_arr[2] + ", A " + string_arr[3] + ", B " + string_arr[4] + ", C " + string_arr[5] + "}")
         print(cartessian_string)
-        self.robot.write(system_variable, cartessian_string)
+        self.robot.write(system_variable, cartessian_string, False)
 
     def send_Frame_array(self, arr):
         #self.robot.write("COM_LENGTH", str(length)) # Send length of array
@@ -108,26 +108,26 @@ class Kuka:
             self.send_Frame(arr[i], index_string)
 
     def set_advance(self, value):
-        self.robot.write("$ADVANCE", str(value))
+        self.robot.write("$ADVANCE", str(value), False)
 
     def set_APO_CPTP(self, value):
-        self.robot.write("$APO.CPTP", str(value))
+        self.robot.write("$APO.CPTP", str(value), False)
 
     def set_base(self, arr):
         self.send_Frame(arr, "$BASE")
 
     def set_input(self, index, bool):
-        self.robot.write("COM_IDX", index)
-        self.robot.write("COM_BOOL", bool)
-        self.robot.write("COM_CASEVAR", "2")
+        self.robot.write("COM_IDX", index, False)
+        self.robot.write("COM_BOOL", bool, False)
+        self.robot.write("COM_CASEVAR", "2", False)
 
     def set_output(self, index, bool):
-        self.robot.write("COM_IDX", index)
-        self.robot.write("COM_BOOL", bool)
-        self.robot.write("COM_CASEVAR", "3")
+        self.robot.write("COM_IDX", index, False)
+        self.robot.write("COM_BOOL", bool, False)
+        self.robot.write("COM_CASEVAR", "3", False)
 
     def set_tool(self, arr):
         self.send_Frame(arr, "$TOOL_C")
 
     def set_tool_velocity(self, value):
-        self.robot.write("$VEL.CP", str(value))
+        self.robot.write("$VEL.CP", str(value), False)

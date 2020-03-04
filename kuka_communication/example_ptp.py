@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, 'include/')
 
-from py_openshowvar import *
+from openshowvar import *
 from kuka import Kuka
 import numpy as np
 

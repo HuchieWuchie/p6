@@ -40,9 +40,9 @@ CASE 4
     LIN COM_FRAME_ARRAY[Counter_Variable] C_DIS
   ENDFOR
   Counter_Variable = 0
-  COM_CASEVAR = 0
   COM_LOG_READY = 0
   COM_LOG = 0
+  COM_CASEVAR = 0
 
 CASE 5
 
