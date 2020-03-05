@@ -1,0 +1,104 @@
+DEF KukaCommunicationApp()
+
+INT TCP_VEL
+INT io_id
+INT j_id
+INT program_id
+
+BAS(#INITMOV,0)
+
+PTP $AXIS_ACT
+
+$ORI_TYPE  = #VAR
+$CIRC_TYPE = #BASE
+$VEL.ORI1 = 200
+$VEL.ORI2 = 200
+$ACC.ORI1 = 100
+$ACC.ORI2 = 100
+
+$VEL.CP=0.1
+$ACC.CP=10
+
+$BASE = {FRAME: X 0,Y 0,Z 0,A 0,B 0,C 0}
+$TOOL = {FRAME: X 0,Y 0,Z 0,A 0,B 0,C 0}
+
+$ADVANCE = 0
+COM_ROUNDM = -1
+COM_ACTION = 0
+COM_ACTCNT = 0
+$APO.CPTP = 0
+$APO.CDIS = 0
+
+COM_CASEVAR = 0
+COM_VALUE1 = 0
+COM_ROUNDM = -1
+COM_ACTCNT = 0
+$APO.CPTP = 0
+$APO:CDIS = 0
+
+LOOP
+
+SWITCH COM_CASEVAR
+
+  CASE 1
+    PTP COM_FRAME
+    COM_ACTION = 0
+
+  CASE 2
+    io_id = COM_IDX
+    IF COM_BOOL >= 0.5 THEN
+      WAIT FOR $IN[io_id]==TRUE
+    ELSE
+      WAIT FOR $IN[io_id]==FALSE
+    ENDIF
+    COM_CASEVAR = 0
+
+  CASE 3
+    io_id = COM_IDX
+    IF COM_BOOL >= 0.5 THEN
+      WAIT FOR $OUT[io_id]==TRUE
+    ELSE
+      WAIT FOR $OUT[io_id]==FALSE
+    ENDIF
+    COM_CASEVAR = 0
+
+  CASE 4
+
+    TRIGGER WHEN PATH =10 ONSTART DELAY = 0 DO PULSE($OUT[1], TRUE, 0.1);
+    CONTINUE
+    FOR Counter_Variable = 1 to COM_LENGTH
+      LIN COM_FRAME_ARRAY[Counter_Variable] C_DIS
+    ENDFOR
+    Counter_Variable = 0
+
+    WAIT FOR $VEL_ACT==0
+    COM_LOG_READY = 0
+    COM_LOG = 0
+    COM_CASEVAR = 0
+
+  CASE 5
+
+    IF COM_LOG_READY==1 THEN
+      COM_CASEVAR = 4
+    ENDIF
+
+  CASE 6
+    TCP_VEL = COM_VALUE1
+    WAIT FOR $VEL.CP = TCP_VEL
+    COM_CASEVAR = 0
+
+  CASE 7
+    $TOOL = COM_FRAME
+    COM_CASEVAR = 0
+
+  CASE 8
+    $BASE = COM_FRAME
+    COM_CASEVAR = 0
+
+
+
+ENDSWITCH
+
+ENDLOOP
+
+END

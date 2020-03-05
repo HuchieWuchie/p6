@@ -114,7 +114,8 @@ class Kuka:
         self.robot.write("$APO.CPTP", str(value), False)
 
     def set_base(self, arr):
-        self.send_Frame(arr, "$BASE")
+        self.send_Frame(arr, "$COM_FRAME")
+        self.robot.write("COM_CASEVAR", "8")
 
     def set_input(self, index, bool):
         self.robot.write("COM_IDX", index, False)
@@ -126,8 +127,11 @@ class Kuka:
         self.robot.write("COM_BOOL", bool, False)
         self.robot.write("COM_CASEVAR", "3", False)
 
-    def set_tool(self, arr):
-        self.send_Frame(arr, "$TOOL_C")
+    def set_tool(self, arr):self.send_Frame(arr, "$COM_FRAME")
+        self.robot.write("COM_CASEVAR", "8")
+        self.send_Frame(arr, "$COM_FRAME")
+        self.robot.write("COM_CASEVAR", "7")
 
     def set_tool_velocity(self, value):
-        self.robot.write("$VEL.CP", str(value), False)
+        self.robot.write("COM_VALUE1", str(value), False)
+        self.robot.write("COM_CASEVAR", "6", False)

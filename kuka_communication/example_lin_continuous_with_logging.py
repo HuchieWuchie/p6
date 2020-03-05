@@ -14,23 +14,24 @@ def log_end_effector_cartessian(frequency = 83.3):
 
     while True:
 
-        com_log = int(kuka.robot.read("COM_LOG").decode())
+        com_log = int(kuka.robot.read("COM_LOG", False).decode())
 
         if com_log == 1:
 
             filename=str(datetime.now())
 
-            f= open(filename, "w+")
+            f= open("test.txt", "w+")
             time_to_process = 1/frequency
 
-            kuka.robot.write("COM_LOG_READY", "1")
+            kuka.robot.write("COM_LOG_READY", "1", False)
+            i = 0
 
             while com_log == 1:
 
                 com_log = int(kuka.robot.read("COM_LOG").decode())
 
                 time_start = datetime.now()
-                kuka.read_cartessian()
+                #kuka.read_cartessian()
                 kuka.read_tcp_velocity()
                 out = kuka.read_out(1)
                 f.write("%d," % i)
@@ -44,11 +45,16 @@ def log_end_effector_cartessian(frequency = 83.3):
                 #velocity - to do
                 f.write("\n")
 
-                #writer.writerow([i, datetime.now(), str(kuka.x_cartessian), str(kuka.y_cartessian), str(kuka.z_cartessian), str(kuka.A_cartessian), str(kuka.B_cartessian), str(kuka.C_cartessian), str(self.velocity_cartessian)]) # Write to csv file
-
+                i=i+1
                 time_end = datetime.now()
                 process_time = (time_end - time_start).microseconds*0.000001
-                time.sleep(time_to_process-process_time) # Wait before logging next position
+
+                try:
+                    time.sleep(time_to_process-process_time) # Wait before logging next position
+                except:
+                    print('process time ', process_time)
+
+            f.close()
 
 robot = openshowvar(ip = '192.168.100.147', port = 7000)
 
@@ -99,7 +105,7 @@ kuka.read_cartessian()
 
 
 # Start logging thread
-t1 = threading.Thread(target=log_end_effector_cartessian, args=(83,))
+t1 = threading.Thread(target=log_end_effector_cartessian, args=(60,))
 t1.start()
 
 trajectory_arr = []
