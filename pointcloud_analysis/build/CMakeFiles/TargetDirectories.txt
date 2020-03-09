@@ -1,0 +1,3 @@
+/home/albert/Documents/aalborg_university/6 semester/p6/code/github/p6/build/CMakeFiles/rebuild_cache.dir
+/home/albert/Documents/aalborg_university/6 semester/p6/code/github/p6/build/CMakeFiles/edit_cache.dir
+/home/albert/Documents/aalborg_university/6 semester/p6/code/github/p6/build/CMakeFiles/program.dir

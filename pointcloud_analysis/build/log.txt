@@ -1,0 +1,27 @@
+2020-Mar-09 14:15:48.448523: INFO: Pointcloud: 04-01-test-scan-2.txt OUTPUT: roi
+2020-Mar-09 14:15:48.879824: INFO, Loaded pointcloud.
+2020-Mar-09 14:15:48.879910: INFO, Pointcloud size: 339968
+
+
+2020-Mar-09 14:15:49.113639: INFO, zero points removed.
+2020-Mar-09 14:15:49.113745: INFO, Pointcloud size: 339684
+
+
+2020-Mar-09 14:15:49.764336: INFO, pointcloud paramters: 
+x minimum:	-27.1066
+x maxmimum:	27.7585
+y minimum:	0
+y maxmimum:	49.5
+z minimum:	126.376
+z maxmimum:	131.094
+x resolution: 	0.0267896
+y resolution: 	0.3
+x range: 	2048
+y range: 	166
+
+
+2020-Mar-09 14:15:49.842767: INFO, normalized pointcloud.
+2020-Mar-09 14:15:49.842864: INFO, normalized pointclod size: 339684
+2020-Mar-09 14:15:49.842919: INFO, saved normalized pointcloud.
+2020-Mar-09 14:15:50.903352: INFO, pointcloud to grid.
+2020-Mar-09 14:15:55.891247: INFO, region of interest size: 18540
