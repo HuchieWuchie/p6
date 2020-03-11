@@ -173,6 +173,16 @@ int main(int argc, char** argv){
 
     // Save weld seams
     if(argument == "roi"){
+      
+      // Upscale pointcloud (unnormalize)
+ 
+      for(int i = 0; i < int(weld_seam.size()); i++){
+        for(int j = 0; j < int(weld_seam[i].size()); j++){
+            float z_norm = weld_seam[i][j][2];
+            weld_seam[i][j][2] = (z_norm * pointcloud.z_max) - (z_norm * pointcloud.z_min) + pointcloud.z_min;
+        }
+      }
+      
       for(int i = 0; i < int(weld_seam.size()); i++){
         Pointcloud pcd_weld_seam;
         pcd_weld_seam.pcd = weld_seam[i];
