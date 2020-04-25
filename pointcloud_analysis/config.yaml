@@ -1,0 +1,40 @@
+pcd_file:
+    path_unprocessed: scans/before/unprocessed/
+    ext_txt: .txt
+    ext_pcd: .pcd
+    ext_npy: .npy
+    path_processed: scans/before/processed/
+    ROI: regions_of_interest/before/
+
+after_file:
+    path_unprocessed: scans/after/unprocessed/
+    ext_txt: .txt
+    ext_pcd: .pcd
+    ext_npy: .npy
+    path_processed: scans/after/processed/
+    ROI: regions_of_interest/after/
+
+model:
+    path: model/
+    path_positive: dataset/positive/
+    path_negative: dataset/negative/
+    model_name: classifier.pth
+    feature_size: 101
+    step_size: 50
+    confidence_threshold: 0.8
+
+feature_vector:
+    border_x: 50
+    x: False
+    y: False
+    z: True
+
+
+model_after:
+    path: model/
+    path_positive: dataset/positive/
+    path_negative: dataset/negative/
+    model_name: classifier.pth
+    feature_size: 101
+    step_size: 50
+    confidence_threshold: 0.4
