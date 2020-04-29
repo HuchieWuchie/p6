@@ -30,7 +30,7 @@ import os
 import time
 start_time = time.time()
 
-FILE_NAME = "T_joint_attempt_1.txt"
+FILE_NAME = "T_joint_attempt_2.txt"
 PIT_ANGLE = int(input('Define PIT indentation angle in degrees:'))
 
 os.chdir("t-scans/T_joint_scans/")
@@ -62,6 +62,13 @@ pcd.flip()
 pcd.getPointCloudLines() # Construct arrays of point cloud lines
 line = pcd.pointCloudLine
 
+
+#To visualize the pointcloud uncomment the next line
+
+#o3d.visualization.draw_geometries([pcd.pcd])
+
+
+#functions used for the program
 
 def butter_lowpass(cutoff, fs, order=5):
     nyq = 0.5 * fs
