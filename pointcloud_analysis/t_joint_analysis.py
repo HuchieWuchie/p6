@@ -167,7 +167,7 @@ for i in tqdm(range(len(line))):
     trajectory_right.append([line[i][:][second_max_idx,0], line[i][:][second_max_idx,1], line[i][:][second_max_idx,2], right_angle])
 
     plt.rcParams.update({'font.size': 22})
-    if i>38:
+    if i>420:
         fig, axs = plt.subplots(3, 1, constrained_layout=True)
         axs[0].set_title('Curvature of pointcloud line')
         axs[0].plot(curvature_line,curvature)
@@ -177,8 +177,8 @@ for i in tqdm(range(len(line))):
         axs[1].set_title('Gradient of pointcloud line')
         axs[2].plot(line[i][:][:,0],line[i][:][:,2])
         axs[2].set_title('Pointcloud line')
-        #axs[2].plot(line[i][:][first_max_idx,0], line[i][:][first_max_idx,2], 'bo')
-        #axs[2].plot(line[i][:][second_max_idx,0], line[i][:][second_max_idx,2], 'bo')
+        axs[2].plot(line[i][:][first_max_idx,0], line[i][:][first_max_idx,2], 'bo')
+        axs[2].plot(line[i][:][second_max_idx,0], line[i][:][second_max_idx,2], 'bo')
         #axs[2].plot(rotateline_left_x, rotateline_left_z,'y')
         #axs[2].plot(linefit_left[0], linefit_left[1],'g')
         #axs[2].plot(horizontal_line_point_left[0],horizontal_line_point_left[1],'ro')
@@ -192,8 +192,8 @@ for i in tqdm(range(len(line))):
 trajectory_left = np.array(trajectory_left)
 trajectory_right = np.array(trajectory_right)
 
-#trajectory_left[:,0] = smooth_outliers(trajectory_left[:,0],5)
-#trajectory_right[:,0] = smooth_outliers(trajectory_right[:,0],5)
+trajectory_left[:,0] = smooth_outliers(trajectory_left[:,0],7)
+trajectory_right[:,0] = smooth_outliers(trajectory_right[:,0],7)
 
 os.chdir("/home/karl/P6/Code/p6-2/p6/pointcloud_analysis/trajectories")
 with open('trajectory_left.txt', 'w') as filehandle:
